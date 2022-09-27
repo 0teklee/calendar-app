@@ -1,5 +1,5 @@
 import Modal from "@components/Atom/Modal";
-import IEventDetail from "libs/types/eventDetailTypes";
+import { IEventDetail } from "libs/types/CalendarTypes";
 import { Dispatch } from "react";
 
 const DetailSchedule = ({
@@ -9,14 +9,7 @@ const DetailSchedule = ({
   props: IEventDetail;
   setState: Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const {
-    title,
-    description = "설명 없음",
-    allDay,
-    start,
-    end,
-    location,
-  } = props;
+  const { title, description = "설명 없음", start, end, location } = props;
 
   return (
     <Modal setState={setState}>
@@ -48,11 +41,6 @@ const DetailSchedule = ({
           })}
         </span>
       </div>
-      <div className="w-80 mb-4">
-        <h2 className="inline mr-5 font-bold">종일 :</h2>
-        <span>{allDay ? "YES" : "NO"}</span>
-      </div>
-
       <div className="w-80 mb-4">
         <h2 className="inline mr-5 font-bold">장소 :</h2>
         <span>{location ? location : "장소 없음"}</span>
