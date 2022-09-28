@@ -1,3 +1,5 @@
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
+
 interface IEventDetail {
   title: string;
   description?: string;
@@ -29,10 +31,18 @@ interface IGapiInsert extends Omit<IPostEventBody, "start" | "end" | "title"> {
   end: { dateTime: string; timeZone: string };
 }
 
+interface ICalendarProps {
+  setScheduleDetail: Dispatch<SetStateAction<IEventDetail>>;
+  setIsDetailModal: Dispatch<SetStateAction<boolean>>;
+  setSelectX: Dispatch<SetStateAction<number | undefined>>;
+  selectCreate: MutableRefObject<ISelectDate | undefined>;
+}
+
 export type {
   IEventDetail,
   ISelectDate,
   IPostEventBody,
   IGapiInsert,
   ICreateProps,
+  ICalendarProps,
 };
