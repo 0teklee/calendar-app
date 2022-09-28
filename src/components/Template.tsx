@@ -51,7 +51,7 @@ const Template = () => {
   return (
     <>
       <div className="Template">
-        <h1 className="mt-20 mb-10 text-5xl font-semibold text-center">
+        <h1 className="mt-10 mb-10 text-5xl font-semibold text-center">
           Calendar App
         </h1>
         <h2 className="mt-5 mb-5 text-xl font-semibold text-center">
