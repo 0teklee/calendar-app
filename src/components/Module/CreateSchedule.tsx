@@ -1,13 +1,14 @@
-import React, { Dispatch, useEffect, useRef } from "react";
+import React, { Dispatch, useEffect, useRef, useState } from "react";
+import Cookie from "js-cookie";
 
 import Modal from "components/Atom/Modal";
 import CustomGoogleLogin from "components/Module/CustomGoogleLogin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import postEventFormat from "libs/postEventFormat";
-import { ICreateProps, IPostEventBody } from "libs/types/CalendarTypes";
+import { ICreateProps } from "libs/types/CalendarTypes";
 import { apiKey, calendarId, clientId } from "libs/apiConfig";
-import { gapiPostEvent } from "libs/gapi";
+import gapiCreateEvent from "libs/gapiCreateEvent";
 
 const CreateSchedule = ({
   setState,
@@ -18,6 +19,10 @@ const CreateSchedule = ({
   start: Date;
   end: Date;
 }) => {
+  const [isCookie, setIsCookie] = useState<boolean>(
+    Cookie.get("access_token") !== undefined
+  );
+
   const inputRef = useRef<ICreateProps>({
     title: "",
     location: "",
@@ -84,24 +89,33 @@ const CreateSchedule = ({
         <h2 className="mb-3 font-bold">설명</h2>
         <textarea
           id="description"
-          className="resize-none w-80 h-40 mb-4 p-3 border border-gray-400 rounded-lg"
+          className="resize-none w-80 h-40 mb-4 p-3 border border-gray-400 rounded-lg "
           onChange={handleInput}
         />
         <div className="flex flex-col items-center">
-          <GoogleOAuthProvider clientId={clientId}>
-            <CustomGoogleLogin />
-          </GoogleOAuthProvider>
+          {!isCookie && (
+            <GoogleOAuthProvider clientId={clientId}>
+              <CustomGoogleLogin setState={setIsCookie} />
+            </GoogleOAuthProvider>
+          )}
+
           <button
             type="submit"
             id="description"
-            className="mt-4 p-3 text-white rounded-lg bg-blue-600 "
-            onClick={(e) => {
+            className={`mt-4 p-3 text-white rounded-lg bg-blue-${
+              isCookie ? 600 : 200
+            }`}
+            onClick={async (e) => {
               e.preventDefault();
+              if (!isCookie) {
+                alert("로그인을 진행해주세요");
+                return;
+              }
               if (!inputRef.current.title) {
                 alert("제목을 입력해주세요");
                 return;
               }
-              gapiPostEvent(apiKey, {
+              const post = await gapiCreateEvent(apiKey, {
                 calendarId: calendarId,
                 resource: postEventFormat({
                   ...inputRef.current,
@@ -109,9 +123,16 @@ const CreateSchedule = ({
                   end: new Date(inputRef.current.end),
                 }),
               });
+              if (post) {
+                alert("달력에 일정을 추가했습니다.");
+              }
+              if (!post) {
+                alert("에러 발생. 일정을 추가하지 못했습니다.");
+              }
+              window.location.reload();
             }}
           >
-            token
+            일정 추가
           </button>
         </div>
       </form>
