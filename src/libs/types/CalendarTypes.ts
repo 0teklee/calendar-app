@@ -14,9 +14,6 @@ interface ISelectDate {
 }
 
 interface IPostEventBody extends Omit<IEventDetail, "start" | "end"> {
-  title: string;
-  description?: string;
-  location?: string;
   start: Date;
   end: Date;
 }
