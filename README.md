@@ -2,9 +2,8 @@
 
 ## Demo
 
-<img src="public/aseet/main.gif" alt="main">
+<img src="public/aseet/detail.gif" alt="main">
 <img src="public/aseet/create.gif" alt="create">
-<img src="public/asset/create.gif" alt="detail">
 
 ## Author
 
