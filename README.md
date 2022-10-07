@@ -9,9 +9,9 @@
 ## Author
 
 @0teklee
-email : leetekwoo@gmail.com
-blog : https://teklog.site
-LinkedIn : [Lee Tekwoo](https://www.linkedin.com/in/tekwoo-lee-a67913171)
+- email : leetekwoo@gmail.com
+- blog : https://teklog.site
+- LinkedIn : [Lee Tekwoo](https://www.linkedin.com/in/tekwoo-lee-a67913171)
 
 ## Description
 
